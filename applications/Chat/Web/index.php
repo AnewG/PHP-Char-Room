@@ -183,6 +183,10 @@
     $(document).ready(function(){
       $('#fall').popup();
       $('#open_fall')[0].click();
+
+      $('#close_page').on('click',function(){
+        location.href = "about:blank";
+      });
     });
   </script>
 </head>
@@ -227,7 +231,23 @@
 <!-- ************ 登录区 Start ************ -->
 <div id="fall_wrapper" class="popup_wrapper" style="opacity: 0; visibility: hidden; position: fixed; overflow: auto; z-index: 100001; width: 100%; height: 100%; top: 0px; left: 0px; text-align: center; display: none;">
   <div id="fall" class="well popup_content popup_content_visible" style="max-width: 45em; opacity: 0; visibility: hidden; display: inline-block; outline: none; text-align: left; position: relative; vertical-align: middle;" aria-hidden="true" role="dialog" aria-labelledby="open_53632853" tabindex="-1">
-    Popup <!-- fall_close -->
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">@</div>
+          <input class="form-control" type="text" placeholder="User Name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="exampleInputPassword2">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+      </div>
+
+      <button style="margin-left:10px;" id="close_page" class="pull-right btn btn-default">Close</button>
+      <button type="submit" class="pull-right btn btn-success">Sign in</button>
+      <button class="fall_close" id="close_fall" style="display:none;">CloseFall</button>
+
   </div>
 </div>
 <button id="open_fall" class="fall_open btn btn-default" style="display:none;">OpenFall</button>
