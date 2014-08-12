@@ -1,1 +1,1 @@
- [更多请访问www.workerman.net](http://www.workerman.net/workerman-chat)
+Based on workerman + websocket
