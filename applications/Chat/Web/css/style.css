@@ -11,7 +11,10 @@ body
 #dialog
 {
 	min-height:600px;
-	background:#EEEEEE;
+    max-height: 600px;
+	/*background:#EEEEEE;*/
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .textarea
@@ -51,11 +54,11 @@ body
     padding:10px;
     margin:10px 0 15px;
     color:#000;
-    background:#D3FF93; /* default background for browsers without gradient support */
-    background:-webkit-gradient(linear, 0 0, 0 100%, from(#EFFFD7), to(#D3FF93));
-    background:-moz-linear-gradient(#EFFFD7, #D3FF93);
-    background:-o-linear-gradient(#EFFFD7, #D3FF93);
-    background:linear-gradient(#EFFFD7, #D3FF93);
+    background:#69ECFF; /* default background for browsers without gradient support */
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#D0FDFF), to(#69ECFF));
+    background:-moz-linear-gradient(#D0FDFF, #69ECFF);
+    background:-o-linear-gradient(#D0FDFF, #69ECFF);
+    background:linear-gradient(#D0FDFF, #69ECFF);
     -webkit-border-radius:10px;
     -moz-border-radius:10px;
     border-radius:10px;
@@ -64,19 +67,19 @@ body
      box-shadow:1px 1px 2px hsla(0, 0%, 0%, 0.3);  
 }
 
-    .triangle-isosceles:hover{  
-        top:-2px;  
-        left:-2px;  
-        -moz-box-shadow:3px 3px 2px hsla(0, 0%, 0%, 0.3);  
-        -webkit-box-shadow:3px 3px 2px hsla(0, 0%, 0%, 0.3);  
-        box-shadow:3px 3px 2x hsla(0, 0%, 0%, 0.3);  
-    }  
+.triangle-isosceles:hover{  
+/*    top:-2px;  
+    left:-2px;  
+    -moz-box-shadow:3px 3px 2px hsla(0, 0%, 0%, 0.3);  
+    -webkit-box-shadow:3px 3px 2px hsla(0, 0%, 0%, 0.3);  
+    box-shadow:3px 3px 2x hsla(0, 0%, 0%, 0.3); */ 
+}  
 
 .triangle-isosceles.top {
-    background:-webkit-gradient(linear, 0 0, 0 100%, from(#D3FF93), to(#EFFFD7));
-    background:-moz-linear-gradient(#D3FF93, #EFFFD7);
-    background:-o-linear-gradient(#D3FF93, #EFFFD7);
-    background:linear-gradient(#D3FF93, #EFFFD7);
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#69ECFF), to(#D0FDFF));
+    background:-moz-linear-gradient(#69ECFF, #D0FDFF);
+    background:-o-linear-gradient(#69ECFF, #D0FDFF);
+    background:linear-gradient(#69ECFF, #D0FDFF);
 }
 
 .triangle-isosceles:after {
@@ -87,10 +90,11 @@ body
     border-width:9px 21px 0; 
     border-style:solid;
     border-color:#D3FF93 transparent;
-    display:block; 
+    display:none; 
     width:0;
 }
 .triangle-isosceles.top:after {
+    display:none; 
     top:-9px;
     left:15px;
     bottom:auto;

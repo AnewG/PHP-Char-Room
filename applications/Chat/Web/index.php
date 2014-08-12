@@ -9,6 +9,15 @@
   <link href="/workerman-chat-master/applications/Chat/Web/css/style.css" rel="stylesheet">
   <style>
 
+  .room_bg{
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-attachment: fixed;
+      background-color: #FBFBFB;
+      background-image: url('img/circuit.png');
+      background-repeat: repeat-x ;
+  }
+
   #fall_background {
       -webkit-transition: all 1s;
          -moz-transition: all 1s;
@@ -184,10 +193,13 @@
    				}
           break;
     	}
+      $('#dialog').scrollTop(1200);
     }
 
     $(document).ready(function(){
+
       $('#fall').popup();
+      
       $('#open_fall')[0].click();
 
       $('#close_page').on('click',function(){
@@ -217,10 +229,10 @@
     });
   </script>
 </head>
-<body>
+<body class="room_bg">
 
 <!-- ************ 主界面 Start ************ -->
-<div class="container">
+<div style="margin-top:10px;" class="container">
 
   <div class="row clearfix">
 
@@ -228,28 +240,25 @@
 
       <div class="col-md-6 column">
 
-         <button style="width:100%;">更早</button>
-
          <div class="thumbnail">
+
            <!-- talk zone -->
            <div class="caption" id="dialog"></div>
+           <!-- talk zone -->
 
-           <button style="width:100%;">搜索</button>
          </div>
 
          <form onsubmit="onSubmit(); return false;">
            <!-- commit zone -->
            <textarea class="textarea thumbnail" id="textarea"></textarea>
            <div class="say-btn">
-             <input type="submit" class="btn btn-success" value="发表" />
+             <input id="send" type="submit" class="btn btn-success" value="发表" />
            </div>
          </form>
 
       </div>
 
       <div class="col-md-3 column">
-
-        <div style="margin-top:25px;"></div>
 
         <div class="thumbnail">
           <!-- user_list -->
