@@ -26,7 +26,10 @@ body
 #userlist
 {
 	min-height:600px;
-	background:#EEEEEE;
+    max-height:600px;
+	/*background:#EEEEEE;*/
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #userlist > li
@@ -34,6 +37,7 @@ body
 	color:#1372A2;
 	list-style:none;
 	margin-left:12px;
+    margin-top:3px;
 }
 
 #userlist > h4

@@ -169,7 +169,7 @@
     // 刷新用户列表框
     function flush_user_list_window(){
       var userlist_window = document.getElementById("userlist");
-      userlist_window.innerHTML = '<h4>在线用户</h4><ul>';
+      userlist_window.innerHTML = '<h4>Online User</h4><hr /><ul>';
       for(var p in user_list){
         userlist_window.innerHTML += '<li id="'+p+'">'+user_list[p]+'</li>';
       }
@@ -199,7 +199,7 @@
     $(document).ready(function(){
 
       $('#fall').popup();
-      
+
       $('#open_fall')[0].click();
 
       $('#close_page').on('click',function(){
