@@ -7,6 +7,7 @@
   </script>
   <link href="/workerman-chat-master/applications/Chat/Web/css/bootstrap.min.css" rel="stylesheet">
   <link href="/workerman-chat-master/applications/Chat/Web/css/style.css" rel="stylesheet">
+  <link href="/workerman-chat-master/applications/Chat/Web/css/jquery.atwho.css" rel="stylesheet">
   <style>
 
   .room_bg{
@@ -60,6 +61,8 @@
   <script type="text/javascript" src="/workerman-chat-master/applications/Chat/Web/js/jquery.min.js"></script>
   <script type="text/javascript" src="/workerman-chat-master/applications/Chat/Web/js/json.js"></script>
   <script type="text/javascript" src="/workerman-chat-master/applications/Chat/Web/js/jquery.popupoverlay.js"></script>
+  <script type="text/javascript" src="/workerman-chat-master/applications/Chat/Web/js/jquery.caret.min.js"></script>
+  <script type="text/javascript" src="/workerman-chat-master/applications/Chat/Web/js/jquery.atwho.js"></script>
   <script type="text/javascript">
 
     if (typeof console == "undefined") {
@@ -138,9 +141,27 @@
     // 提交对话
     function onSubmit() {
       var input = document.getElementById("textarea");
-      ws.send(JSON.stringify({"type":"say","to_uid":"all","content":input.value}));
+      var input_text = $(input).val();
+
+      var reg = /@[\u4e00-\u9fa5a-zA-Z0-9_-]{5,8}/gi;
+      var match_arr = input_text.match(reg);
+
+      if( !!match_arr ){
+          var len = match_arr.length;
+          if( len > 0 ){
+            for (var i = 0 ; i < len ; i++){
+                var tmp = match_arr[i].substring(1);
+                if( jQuery.inArray( tmp , user_at_list ) != -1 ){
+                  ws.send(JSON.stringify({"type":"name","to_name":tmp,"content":input.value}));
+                }
+            }
+          }
+      }else{
+          ws.send(JSON.stringify({"type":"say","to_uid":"all","content":input.value}));
+      }
       input.value = "";
       input.focus();
+      return false;
     }
 
     // 将用户加如到当前用户列表
@@ -172,8 +193,18 @@
       userlist_window.innerHTML = '<h4>Online User</h4><hr /><ul>';
       for(var p in user_list){
         userlist_window.innerHTML += '<li id="'+p+'">'+user_list[p]+'</li>';
+
+        if( jQuery.inArray( user_list[p] , user_at_list ) == -1 ){
+          user_at_list.push(user_list[p]);
+        }
       }
       userlist_window.innerHTML += '</ul>';
+  
+      $('#textarea').atwho({
+          at: "@",
+          data: user_at_list
+      })
+      
     }
 
     // 发言
@@ -195,6 +226,8 @@
     	}
       $('#dialog').scrollTop(1200);
     }
+
+    var user_at_list = [];
 
     $(document).ready(function(){
 

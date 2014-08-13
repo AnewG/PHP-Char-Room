@@ -7,7 +7,7 @@
  * 
  */
 
-/* @TODO 浏览器刷新问题，私信，系统广播 */
+/* @TODO 连接bug，私信(@)，系统广播(admin) */
 
 /* Table - user & message */
 
@@ -131,6 +131,7 @@ class Event
     */
    public static function onMessage($uid, $message)
    {
+
         // 检测是否是断开包
         if(\WebSocket::isClosePacket($message)){
             Gateway::kickUid($uid, '');
@@ -174,8 +175,7 @@ class Event
             // 用户发言 message: {type:say, to_uid:xx, content:xx}
             case 'say':
                 // 私聊
-                if($message_data['to_uid'] != 'all')
-                {
+                if($message_data['to_uid'] != 'all'){
                     $new_message = array(
                         'type'=>'say',
                         'from_uid'=>$uid, 
@@ -185,6 +185,7 @@ class Event
                     );
                     return Gateway::sendToUid($message_data['to_uid'], \WebSocket::encode(json_encode($new_message)));
                 }
+
                 // 向大家说
                 $new_message = array(
                     'type'=>'say', 
@@ -193,7 +194,12 @@ class Event
                     'content'=>nl2br(htmlspecialchars($message_data['content'])),
                     'time'=>date('Y-m-d :i:s'),
                 );
+
                 return Gateway::sendToAll(\WebSocket::encode(json_encode($new_message)));
+
+          case 'name':
+                var_dump($message_data);
+                return false;
                 
         }
    }
