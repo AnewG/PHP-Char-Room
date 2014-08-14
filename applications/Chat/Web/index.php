@@ -123,17 +123,21 @@
             //{"type":"logout","uid":xxx,"time":"xxx"}
          	  say(data['uid'], 'all', user_list['_'+data['uid']]+' 退出了', data['time']);
          	  del_user_list(data['uid']);
+            break;
+
+          case 'ignore':
+            break;
         }
       };
 
       ws.onclose = function() {
     	  // console.log("服务端关闭了连接");
-        alert('账密错误');
+        alert('somthing wrong...');
       };
 
       ws.onerror = function() {
     	  // console.log("出现错误");
-        alert('服务器出现错误');
+        // alert('服务器出现错误');
       };
 
     }
@@ -283,6 +287,8 @@
 
          <form onsubmit="onSubmit(); return false;">
            <!-- commit zone -->
+           <div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><strong>Tip : </strong> 输入 '@username' 可向指定用户推送信息</div>
+           
            <textarea class="textarea thumbnail" id="textarea"></textarea>
            <div class="say-btn">
              <input id="send" type="submit" class="btn btn-success" value="发表" />

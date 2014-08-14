@@ -7,8 +7,6 @@
  * 
  */
 
-/* @TODO 连接bug，私信(@)，系统广播(admin) */
-
 /* Table - user & message */
 
 require_once ROOT_DIR . '/Protocols/WebSocket.php';
@@ -16,6 +14,7 @@ require_once ROOT_DIR . '/Lib/Rb.php';  // include RedBean ORM library
 
 class Event
 {
+    public static $isInitDB = false;
     /**
      * 网关有消息时，判断消息是否完整
      */
@@ -31,16 +30,19 @@ class Event
     */
    public static function onConnect($message)
    {
-       // init once
-       R::setup(
-         'mysql:host=localhost;dbname=char',
-         'chat',
-         'chat'
-       );
-
-       // R::selectDatabase( 'otherDbName' );
-       $_userTable = R::dispense( 'user' );
-       $_msgTable  = R::dispense( 'message' );
+       if( !self::$isInitDB ){
+           // init once
+           R::setup(
+             'mysql:host=localhost;dbname=char',
+             'chat',
+             'chat'
+           );
+    
+           // R::selectDatabase( 'otherDbName' );
+           $_userTable = R::dispense( 'user' );
+           $_msgTable  = R::dispense( 'message' );
+           self::$isInitDB = true;
+       }
 
        // WebSocket 握手阶段
        if(0 === strpos($message, 'GET'))
@@ -198,9 +200,27 @@ class Event
                 return Gateway::sendToAll(\WebSocket::encode(json_encode($new_message)));
 
           case 'name':
-                var_dump($message_data);
-                return false;
-                
+                $find_name = $message_data['to_name'];
+                $result = R::getRow( 'SELECT id FROM user WHERE name = :name LIMIT 1',
+                    array(
+                      ':name' => $find_name
+                    )
+                );
+ 
+                if(is_null($result)){
+                    return;
+                }else{
+                    $to_uid = $result['id'];
+                }
+
+                $new_message = array(
+                    'type'=>'say',
+                    'from_uid'=>$uid, 
+                    'to_uid'=>$to_uid,
+                    'content'=>nl2br(htmlspecialchars($message_data['content'])),
+                    'time'=>date('Y-m-d :i:s'),
+                );
+                return Gateway::sendToUid($to_uid, \WebSocket::encode(json_encode($new_message)));
         }
    }
    
