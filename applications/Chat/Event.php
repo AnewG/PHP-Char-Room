@@ -176,7 +176,7 @@ class Event
                 
             // 用户发言 message: {type:say, to_uid:xx, content:xx}
             case 'say':
-                // 私聊
+                // 私聊 unless
                 if($message_data['to_uid'] != 'all'){
                     $new_message = array(
                         'type'=>'say',
